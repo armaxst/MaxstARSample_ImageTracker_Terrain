@@ -13,7 +13,7 @@ public class HomeSceneManager : MonoBehaviour
 
 	public void OnImageTargetClick()
 	{
-		SceneStackManager.Instance.LoadScene("Home", "ImageTracker");
+		SceneStackManager.Instance.LoadScene("Home", "Demo");
 	}
 
 	public void OnInstantImageClick()
