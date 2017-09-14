@@ -73,6 +73,7 @@ public class ImageTrackerSample : MonoBehaviour
 		if (!startTrackerDone)
 		{
 			TrackerManager.GetInstance().StartTracker(MaxstARUtils.TrackerMask.IMAGE_TRACKER);
+			SetExtendedMode();
 			startTrackerDone = true;
 		}
 

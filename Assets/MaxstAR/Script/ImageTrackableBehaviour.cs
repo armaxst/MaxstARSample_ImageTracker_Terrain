@@ -13,27 +13,27 @@ namespace maxstAR
     {
 		public override void OnTrackSuccess(string id, string name, Matrix4x4 poseMatrix)
         {
-			//Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
-			//Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
-			////Terrain[] terrainComponents = GetComponentsInChildren<Terrain>(true);
+			Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
+			Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+			Terrain[] terrainComponents = GetComponentsInChildren<Terrain>(true);
 
-			//// Enable renderers
-			//foreach (Renderer component in rendererComponents)
-			//{
-			//	component.enabled = true;
-			//}
+			// Enable renderers
+			foreach (Renderer component in rendererComponents)
+			{
+				component.enabled = true;
+			}
 
-			//// Enable colliders
-			//foreach (Collider component in colliderComponents)
-			//{
-			//	component.enabled = true;
-			//}
+			// Enable colliders
+			foreach (Collider component in colliderComponents)
+			{
+				component.enabled = true;
+			}
 
-			//// Enable terrain
-			//foreach (Terrain component in terrainComponents)
-			//{
-			//	component.enabled = true;
-			//}
+			// Enable terrain
+			foreach (Terrain component in terrainComponents)
+			{
+				component.enabled = true;
+			}
 
 			transform.position = MatrixUtils.PositionFromMatrix(poseMatrix);
 			transform.rotation = MatrixUtils.QuaternionFromMatrix(poseMatrix);
@@ -42,27 +42,27 @@ namespace maxstAR
 
         public override void OnTrackFail()
         {
-			//Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
-			//Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
-			////Terrain[] terrainComponents = GetComponentsInChildren<Terrain>(true);
+			Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
+			Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+			Terrain[] terrainComponents = GetComponentsInChildren<Terrain>(true);
 
-			//// Disable renderer
-			//foreach (Renderer component in rendererComponents)
-			//{
-			//	component.enabled = false;
-			//}
+			// Disable renderer
+			foreach (Renderer component in rendererComponents)
+			{
+				component.enabled = false;
+			}
 
-			//// Disable collider
-			//foreach (Collider component in colliderComponents)
-			//{
-			//	component.enabled = false;
-			//}
+			// Disable collider
+			foreach (Collider component in colliderComponents)
+			{
+				component.enabled = false;
+			}
 
-			//// Disable terrain
-			//foreach (Terrain component in terrainComponents)
-			//{
-			//	component.enabled = false;
-			//}
+			// Disable terrain
+			foreach (Terrain component in terrainComponents)
+			{
+				component.enabled = false;
+			}
         }
     }
 }
