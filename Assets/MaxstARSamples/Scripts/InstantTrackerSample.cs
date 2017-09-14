@@ -17,12 +17,12 @@ public class InstantTrackerSample : MonoBehaviour
 	private float touchStartY = 0.0f;
 
 	private float translationX = 0.0f;
-	private float translationY = 0.0f;
+	private float translationZ = 0.0f;
 
 	private float positionX = 0;
-	private float positionY = 0;
+	private float positionZ = 0;
 
-	private int rotationDegree = 0;
+	private int defaultRotationDegree = 0;
 	private bool startTrackerDone = false;
 	private bool cameraStartDone = false;
 	private bool findSurfaceDone = false;
@@ -101,10 +101,12 @@ public class InstantTrackerSample : MonoBehaviour
 		Matrix4x4 orientationMatrix = Matrix4x4.identity;
 		Quaternion orientationQuaternion = Quaternion.identity;
 
-		orientationQuaternion.eulerAngles = new Vector3(0, 0, rotationDegree);
+		//orientationQuaternion.eulerAngles = new Vector3(0, 0, rotationDegree);
+		orientationQuaternion.eulerAngles = new Vector3(0, defaultRotationDegree, 0);
 		orientationMatrix = MatrixUtils.MatrixFromQuaternion(orientationQuaternion);
 		translation.m03 = positionX;
-		translation.m13 = positionY;
+		//translation.m13 = positionZ;
+		translation.m23 = positionZ;
 		matrix *= translation;
 		matrix *= orientationMatrix;
 
@@ -151,7 +153,7 @@ public class InstantTrackerSample : MonoBehaviour
 		}
 
 		translationX = worldCoordinate[0];
-		translationY = worldCoordinate[1];
+		translationZ = worldCoordinate[1];
 	}
 
 	private void TouchMove()
@@ -181,32 +183,30 @@ public class InstantTrackerSample : MonoBehaviour
 		switch (Screen.orientation)
 		{
 			case ScreenOrientation.Portrait:
-				rotationDegree = 0;
 				worldCoordinate[0] = worldCoordinate[0];
 				worldCoordinate[1] = -worldCoordinate[1];
 				break;
+
 			case ScreenOrientation.PortraitUpsideDown:
-				rotationDegree = 180;
 				worldCoordinate[0] = -worldCoordinate[0];
 				worldCoordinate[1] = worldCoordinate[1];
 				break;
+
 			case ScreenOrientation.Landscape:
-				rotationDegree = -90;
 				worldCoordinate[0] = worldCoordinate[0];
 				worldCoordinate[1] = -worldCoordinate[1];
 				break;
 			case ScreenOrientation.LandscapeRight:
-				rotationDegree = 90;
 				worldCoordinate[0] = -worldCoordinate[0];
 				worldCoordinate[1] = worldCoordinate[1];
 				break;
 		}
 
 		positionX += (worldCoordinate[0] - translationX);
-		positionY += (worldCoordinate[1] - translationY);
+		positionZ += (worldCoordinate[1] - translationZ);
 
 		translationX = worldCoordinate[0];
-		translationY = worldCoordinate[1];
+		translationZ = worldCoordinate[1];
 	}
 
 	void OnApplicationPause(bool pause)
@@ -263,7 +263,26 @@ public class InstantTrackerSample : MonoBehaviour
 			}
 			findSurfaceDone = true;
 			positionX = 0;
-			positionY = 0;
+			positionZ = 0;
+
+			switch (Screen.orientation)
+			{
+				case ScreenOrientation.Portrait:
+					defaultRotationDegree = -90;
+					break;
+
+				case ScreenOrientation.PortraitUpsideDown:
+					defaultRotationDegree = 90;
+					break;
+
+				case ScreenOrientation.Landscape:
+					defaultRotationDegree = 0;
+					break;
+
+				case ScreenOrientation.LandscapeRight:
+					defaultRotationDegree = 180;
+					break;
+			}
 		}
 		else
 		{

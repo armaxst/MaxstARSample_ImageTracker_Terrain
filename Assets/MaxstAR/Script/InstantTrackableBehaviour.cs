@@ -15,6 +15,7 @@ namespace maxstAR
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+			Terrain[] terrainComponents = GetComponentsInChildren<Terrain>(true);
 
             // Enable renderers
             foreach (Renderer component in rendererComponents)
@@ -28,6 +29,12 @@ namespace maxstAR
                 component.enabled = true;
             }
 
+			// Enable terrain
+			foreach (Terrain component in terrainComponents)
+			{
+				component.enabled = true;
+			}
+
 			transform.position = MatrixUtils.PositionFromMatrix(poseMatrix);
 			transform.rotation = MatrixUtils.QuaternionFromMatrix(poseMatrix);
 			transform.localScale = MatrixUtils.ScaleFromMatrix(poseMatrix);
@@ -37,18 +44,25 @@ namespace maxstAR
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+			Terrain[] terrainComponents = GetComponentsInChildren<Terrain>(true);
 
-            // Disable renderer
-            foreach (Renderer component in rendererComponents)
-            {
-                component.enabled = false;
-            }
+			//// Disable renderer
+			//foreach (Renderer component in rendererComponents)
+			//{
+			//	component.enabled = false;
+			//}
 
             // Disable collider
             foreach (Collider component in colliderComponents)
             {
                 component.enabled = false;
             }
+
+			//// Disable terrain
+			//foreach (Terrain component in terrainComponents)
+			//{
+			//	component.enabled = false;
+			//}
         }
     }
 }
