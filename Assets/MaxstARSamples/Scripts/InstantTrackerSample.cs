@@ -9,9 +9,10 @@ using maxstAR;
 
 public class InstantTrackerSample : MonoBehaviour
 {
-	private InstantTrackableBehaviour instantTrackable = null;
-
 	private const float TOUCH_TOLERANCE = 5;
+
+	[SerializeField]
+	private Text startBtnText = null;
 
 	private float touchStartX = 0.0f;
 	private float touchStartY = 0.0f;
@@ -27,8 +28,7 @@ public class InstantTrackerSample : MonoBehaviour
 	private bool cameraStartDone = false;
 	private bool findSurfaceDone = false;
 
-	[SerializeField]
-	private Text startBtnText = null;
+	private InstantTrackableBehaviour instantTrackable = null;
 
 	void Start()
 	{
@@ -95,7 +95,7 @@ public class InstantTrackerSample : MonoBehaviour
 		}
 
 		Trackable trackable = trackingResult.GetTrackable(0);
-		Matrix4x4 matrix = trackable.GetPose();
+		Matrix4x4 poseMatrix = trackable.GetPose();
 
 		Matrix4x4 translation = Matrix4x4.identity;
 		Matrix4x4 orientationMatrix = Matrix4x4.identity;
@@ -107,10 +107,10 @@ public class InstantTrackerSample : MonoBehaviour
 		translation.m03 = positionX;
 		//translation.m13 = positionZ;
 		translation.m23 = positionZ;
-		matrix *= translation;
-		matrix *= orientationMatrix;
+		poseMatrix *= translation;
+		poseMatrix *= orientationMatrix;
 
-		instantTrackable.OnTrackSuccess(trackable.GetId(), trackable.GetName(), matrix);
+		instantTrackable.OnTrackSuccess(trackable.GetId(), trackable.GetName(), poseMatrix);
 	}
 
 	private void TouchStart()
@@ -265,6 +265,7 @@ public class InstantTrackerSample : MonoBehaviour
 			positionX = 0;
 			positionZ = 0;
 
+#if !UNITY_EDITOR
 			switch (Screen.orientation)
 			{
 				case ScreenOrientation.Portrait:
@@ -283,6 +284,7 @@ public class InstantTrackerSample : MonoBehaviour
 					defaultRotationDegree = 180;
 					break;
 			}
+#endif
 		}
 		else
 		{

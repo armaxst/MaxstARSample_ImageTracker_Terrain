@@ -11,8 +11,20 @@ namespace maxstAR
 {
     public class ImageTrackableBehaviour : AbstractImageTrackableBehaviour
     {
+		private Matrix4x4 trackableTransform;
+
+		void Awake()
+		{
+			trackableTransform = Matrix4x4.TRS(
+				Vector3.zero,
+				transform.rotation,
+				transform.localScale);
+		}
+
 		public override void OnTrackSuccess(string id, string name, Matrix4x4 poseMatrix)
         {
+			Matrix4x4 newPose = trackableTransform * poseMatrix;
+
 			Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
 			Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 			Terrain[] terrainComponents = GetComponentsInChildren<Terrain>(true);
@@ -35,9 +47,9 @@ namespace maxstAR
 				component.enabled = true;
 			}
 
-			transform.position = MatrixUtils.PositionFromMatrix(poseMatrix);
-			transform.rotation = MatrixUtils.QuaternionFromMatrix(poseMatrix);
-			transform.localScale = MatrixUtils.ScaleFromMatrix(poseMatrix);
+			transform.position = MatrixUtils.PositionFromMatrix(newPose);
+			transform.rotation = MatrixUtils.QuaternionFromMatrix(newPose);
+			transform.localScale = MatrixUtils.ScaleFromMatrix(newPose);
         }
 
         public override void OnTrackFail()
